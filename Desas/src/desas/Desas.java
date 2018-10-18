@@ -12,6 +12,7 @@ public class Desas {
         Laukums laukums = new Laukums();//izveido speles laukumu
         laukums.printLaukums();//izvada sakuma laukumu
         int x = 0, y = 0;//koordinatu mainigie
+        boolean uzvara = false;
         
         boolean speletajs = true; //true - 1.speletaja gajiens, false - 2.speletaja gajiens
         //turpinas tik ir, kamer tiek aizpildits laukums
@@ -38,10 +39,14 @@ public class Desas {
             laukums.mainaLaukumu(x, y, speletajs);//izmainaa laukumu pec speletaja noraditajam koordinatem
             if(laukums.vaiIrUzvara(speletajs)){ //ja ir uzvara, tad seko izeja no cikla
                 laukums.printLaukums();
+                uzvara = true;
                 break;
             }
             laukums.printLaukums();//izvada situaciju uz laukuma
             speletajs = !speletajs;//speletaju maina
+        }
+        if(!uzvara){
+            System.out.println("Neizskirts!");
         }
         System.out.println("Speles beigas!");
     }
