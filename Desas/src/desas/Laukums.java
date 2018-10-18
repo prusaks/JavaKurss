@@ -82,10 +82,9 @@ public class Laukums {
                        System.out.println(speletajaNr + ".speletajs ir uzvarejis!");
                        return true;
                    }
-                   continue;
                 }
-                cikIrzimju = 0;
             }
+            cikIrzimju = 0;
         }
         
         //Parbaude pa vertikali
@@ -97,10 +96,9 @@ public class Laukums {
                        System.out.println(speletajaNr + ".speletajs ir uzvarejis!");
                        return true;
                    }
-                   continue;
                 }
-                cikIrzimju = 0;
             }
+            cikIrzimju = 0;
         }
         
         //Parbaude pa diogonalem
