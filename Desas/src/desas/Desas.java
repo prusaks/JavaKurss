@@ -28,12 +28,12 @@ public class Desas {
                 do{
                     System.out.println("Ievadi x koordinatas:");
                     x = koordinatesIevade();
-                } while(x > 3);
+                } while(x < 1 || x > 3);
                 //Ievada tik ilgi, kamer ir korektas y koordinatas
                 do{
                     System.out.println("Ievadi y koordinatas:");
                     y = koordinatesIevade();
-                } while(y > 3);                
+                } while(y < 1 || y > 3);                
             } while(!laukums.vaiIrPieejams(x, y));
             
             laukums.mainaLaukumu(x, y, speletajs);//izmainaa laukumu pec speletaja noraditajam koordinatem
