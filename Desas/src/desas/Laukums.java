@@ -2,6 +2,7 @@ package desas;
 
 
 public class Laukums {
+    public static final int MAX = 3;
     
     private String [] [] spelesLaukums;//masivs glabas katru speles laucinu
     
@@ -9,11 +10,11 @@ public class Laukums {
     public Laukums(){
         
         System.out.println("Speles sakums!");
-        spelesLaukums = new String[3][3];
+        spelesLaukums = new String[MAX][MAX];
         
         //aizpilda masivu ar "-"
-        for(int i = 0; i < 3; i++){
-            for(int j = 0; j < 3; j++){
+        for(int i = 0; i < MAX; i++){
+            for(int j = 0; j < MAX; j++){
                 spelesLaukums[i][j] = "-";
             }
         }
@@ -21,8 +22,8 @@ public class Laukums {
 
     //metode printLaukums() izvada situaciju uz laukuma
     public void printLaukums(){
-        for(int i = 0; i < 3; i++){
-            for(int j = 0; j < 3; j++){
+        for(int i = 0; i < MAX; i++){
+            for(int j = 0; j < MAX; j++){
                 System.out.print(spelesLaukums[i][j] + " ");
             }
             System.out.println("");
@@ -40,8 +41,8 @@ public class Laukums {
     
     //si metode parbauda vai laukums ir pilns
     public boolean vaiIrPilns(){
-        for(int i = 0; i < 3; i++){
-            for(int j = 0; j < 3; j++){
+        for(int i = 0; i < MAX; i++){
+            for(int j = 0; j < MAX; j++){
                 if (spelesLaukums[i][j].equals("-")){
                     return false;
                 }
@@ -74,11 +75,11 @@ public class Laukums {
         }
         
         //Parbaude pa horizontali
-        for(int i = 0; i < 3; i++){
-            for(int j = 0; j < 3; j++){
+        for(int i = 0; i < MAX; i++){
+            for(int j = 0; j < MAX; j++){
                 if (spelesLaukums[i][j].equals(zime)){
-                   cikIrzimju++;
-                   if(cikIrzimju == 3){
+                    cikIrzimju++;
+                    if(cikIrzimju == 3){
                        System.out.println(speletajaNr + ".speletajs ir uzvarejis!");
                        return true;
                    }
@@ -88,8 +89,8 @@ public class Laukums {
         }
         
         //Parbaude pa vertikali
-        for(int j = 0; j < 3; j++){
-            for(int i = 0; i < 3; i++){
+        for(int j = 0; j < MAX; j++){
+            for(int i = 0; i < MAX; i++){
                 if (spelesLaukums[i][j].equals(zime)){
                    cikIrzimju++;
                    if(cikIrzimju == 3){
