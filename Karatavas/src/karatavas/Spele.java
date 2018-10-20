@@ -70,11 +70,7 @@ public class Spele {
     
     //parbauda, vai vards ir uzminets
     public boolean vaiIrUzminets(String vards){
-        if (uzminetais.equals(vards)){
-            return true;
-        } else {
-            return false;
-        }
+        return uzminetais.equals(vards);
     }
     
     //parbauda, vai vienigais ievaditais simbols ir skaitlis

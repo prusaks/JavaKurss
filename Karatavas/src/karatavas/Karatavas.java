@@ -8,7 +8,7 @@ public class Karatavas {
         
         String vards = spele.ievadaDatus(1);//ievada minamo vardu
         
-        int atlikushasDzivibas = spele.DZIVIBAS;//pieskir dzivibu skaitu
+        int atlikushasDzivibas = Spele.DZIVIBAS;//pieskir dzivibu skaitu
         
         //definejam dazadus mainigos, kurus izmantos cikla
         String beigtIzvele = ""; //izvele beigt speli
