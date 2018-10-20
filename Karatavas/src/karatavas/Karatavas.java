@@ -1,9 +1,7 @@
 
 package karatavas;
 
-
 public class Karatavas {
-
     
     public static void main(String[] args) {
         Spele spele = new Spele();//sakam speli
@@ -19,7 +17,7 @@ public class Karatavas {
         System.out.println(spele.vardaSlepsana(vards));//noslepj vardu
         
         //cikls turpinas, kamer ir palikusas dzivibas un speletajs nav izlemis beigt speli
-        while(atlikushasDzivibas !=0 && !beigtIzvele.equals("Y")){
+        while(!beigtIzvele.equals("Y")){
             //cikls turpinas tik ilgi, kamer ievadits tikai viens burts          
             while(burts.length() != 1){
                 burts = spele.ievadaDatus(2);
@@ -45,6 +43,10 @@ public class Karatavas {
                 System.out.println("Ievaditais burts nesakrit ne ar vienu no dota varda burtiem!");
                 System.out.println("Tu zaude dzivibu!");
                 System.out.println("Tagad Tev ir " + (--atlikushasDzivibas) + " dzivibas!");
+                if(atlikushasDzivibas == 0){
+                    System.out.println("Tu esi zaudejis!");
+                    break;
+                }
             } else {
                 System.out.println("Tu uzmineji!");
                 System.out.println("Tev paliek " + atlikushasDzivibas + " dzivibas!");

@@ -2,7 +2,6 @@ package karatavas;
 
 import java.util.Scanner;
 
-
 public class Spele {
     public static final int DZIVIBAS = 5; //Dzivibu skaits spele
     public static final char SIMBOLS = '*'; //Apzime aizklatos burtus
@@ -47,21 +46,20 @@ public class Spele {
     //izmainas atmineto burtu simbolu virkne
     public boolean vaiSakrit(String vards, String simbols){
         int sakrit = 0;
-        String fVards = "";
+        char[] uVards = new char[vards.length()];
+        uVards = uzminetais.toCharArray();
+        
         for(int i = 0; i < vards.length(); i++){
             if(vards.charAt(i) == simbols.charAt(0)){
-                fVards +=simbols.charAt(0);
+                uVards[i] = simbols.charAt(0);
                 sakrit++;
-            } else {
-                if (uzminetais.charAt(i) != SIMBOLS){
-                    fVards += uzminetais.charAt(i);
-                } else {
-                    fVards += SIMBOLS;
-                }
-            }
+            } 
         }
         
-        uzminetais = fVards;
+        uzminetais = "";
+        for(int i = 0; i < uVards.length; i++){
+            uzminetais +=uVards[i];
+        }
         
         if(sakrit > 0){
             return true;
