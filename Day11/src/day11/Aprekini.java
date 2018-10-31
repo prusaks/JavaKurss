@@ -35,10 +35,9 @@ public class Aprekini implements IAprekini{
                 return atnemt(skaitlis1, skaitlis2);
             case "*":
                 return reizinat(skaitlis1, skaitlis2);
-            case "=":
-                return  skaitlis1;
             default:
-                return 0;
+                return skaitlis1;
+
         }
     }
 }

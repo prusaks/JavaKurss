@@ -226,7 +226,7 @@ public class Kalkulators extends javax.swing.JPanel {
     private void equalsActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_equalsActionPerformed
         skaitlis1 = aprekini.vienads(skaitlis1, skaitlis2);
         aprekini.setOperacija("=");
-        setDefaultSkaitlis2();
+        rezultats.setText(String.valueOf(skaitlis1));
     }//GEN-LAST:event_equalsActionPerformed
 
     private void minusActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_minusActionPerformed
@@ -242,16 +242,19 @@ public class Kalkulators extends javax.swing.JPanel {
     }//GEN-LAST:event_multiplyActionPerformed
 
     private void clearActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_clearActionPerformed
-        
+        skaitlis1 = 0;
+        skaitlis2 = 0;
+        rezultats.setText(String.valueOf(skaitlis1));
+        aprekini.setOperacija("+");
     }//GEN-LAST:event_clearActionPerformed
 
     private void setElementText(String vertiba){
-        
+
         if(rezultats.getText().equals("0") || skaitlis2 == 0){
             rezultats.setText(vertiba);
         } else {
             rezultats.setText(String.valueOf(skaitlis2) + vertiba);
-        }
+        }    
         
         skaitlis2 = Integer.valueOf(rezultats.getText());
     }
