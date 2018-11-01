@@ -12,15 +12,18 @@ package day11;
 public class Kalkulators extends javax.swing.JPanel {
     
     private final Aprekini aprekini = new Aprekini();
-    private int skaitlis1;
-    private int skaitlis2;
+    private double skaitlis1;
+    private double skaitlis2;
+    private boolean vaiIrKomats = false;
+    private String izvadesLogs = "0";
     /**
      * Creates new form Kalkulators
      */
     public Kalkulators() {
         initComponents();
-        rezultats.setText(String.valueOf(skaitlis1));
+        rezultats.setText(String.valueOf(Math.round(skaitlis1)));
         aprekini.setOperacija("+");
+        
     }
 
     /**
@@ -48,6 +51,8 @@ public class Kalkulators extends javax.swing.JPanel {
         equals = new javax.swing.JButton();
         multiply = new javax.swing.JButton();
         clear = new javax.swing.JButton();
+        floatingPoint = new javax.swing.JButton();
+        divide = new javax.swing.JButton();
 
         setPreferredSize(new java.awt.Dimension(500, 400));
         setLayout(new org.netbeans.lib.awtextra.AbsoluteLayout());
@@ -134,7 +139,7 @@ public class Kalkulators extends javax.swing.JPanel {
 
         rezultats.setBackground(new java.awt.Color(255, 255, 255));
         rezultats.setBorder(javax.swing.BorderFactory.createMatteBorder(1, 1, 1, 1, new java.awt.Color(204, 204, 255)));
-        add(rezultats, new org.netbeans.lib.awtextra.AbsoluteConstraints(30, 20, 330, 30));
+        add(rezultats, new org.netbeans.lib.awtextra.AbsoluteConstraints(30, 20, 440, 30));
 
         plus.setText("+");
         plus.addActionListener(new java.awt.event.ActionListener() {
@@ -175,6 +180,22 @@ public class Kalkulators extends javax.swing.JPanel {
             }
         });
         add(clear, new org.netbeans.lib.awtextra.AbsoluteConstraints(400, 140, 70, 40));
+
+        floatingPoint.setText(".");
+        floatingPoint.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                floatingPointActionPerformed(evt);
+            }
+        });
+        add(floatingPoint, new org.netbeans.lib.awtextra.AbsoluteConstraints(40, 310, 440, 40));
+
+        divide.setText("/");
+        divide.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                divideActionPerformed(evt);
+            }
+        });
+        add(divide, new org.netbeans.lib.awtextra.AbsoluteConstraints(400, 200, 70, 40));
     }// </editor-fold>//GEN-END:initComponents
 
     private void viensActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_viensActionPerformed
@@ -218,24 +239,28 @@ public class Kalkulators extends javax.swing.JPanel {
     }//GEN-LAST:event_nulleActionPerformed
 
     private void plusActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_plusActionPerformed
+        setSkaitlis2();
         skaitlis1 = aprekini.vienads(skaitlis1, skaitlis2);
         aprekini.setOperacija("+");
         setDefaultSkaitlis2();
     }//GEN-LAST:event_plusActionPerformed
 
     private void equalsActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_equalsActionPerformed
+        setSkaitlis2();
         skaitlis1 = aprekini.vienads(skaitlis1, skaitlis2);
         aprekini.setOperacija("=");
-        rezultats.setText(String.valueOf(skaitlis1));
+        setDefaultSkaitlis2();
     }//GEN-LAST:event_equalsActionPerformed
 
     private void minusActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_minusActionPerformed
+        setSkaitlis2();
         skaitlis1 = aprekini.vienads(skaitlis1, skaitlis2);
         aprekini.setOperacija("-");
         setDefaultSkaitlis2();
     }//GEN-LAST:event_minusActionPerformed
 
     private void multiplyActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_multiplyActionPerformed
+        setSkaitlis2();
         skaitlis1 = aprekini.vienads(skaitlis1, skaitlis2);
         aprekini.setOperacija("*");
         setDefaultSkaitlis2();
@@ -244,24 +269,62 @@ public class Kalkulators extends javax.swing.JPanel {
     private void clearActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_clearActionPerformed
         skaitlis1 = 0;
         skaitlis2 = 0;
-        rezultats.setText(String.valueOf(skaitlis1));
+        rezultats.setText(String.valueOf(Math.round(skaitlis1)));
         aprekini.setOperacija("+");
+        izvadesLogs = "0";
+        vaiIrKomats = false;
     }//GEN-LAST:event_clearActionPerformed
 
-    private void setElementText(String vertiba){
+    private void floatingPointActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_floatingPointActionPerformed
+        setElementText(".");
+    }//GEN-LAST:event_floatingPointActionPerformed
 
-        if(rezultats.getText().equals("0") || skaitlis2 == 0){
-            rezultats.setText(vertiba);
-        } else {
-            rezultats.setText(String.valueOf(skaitlis2) + vertiba);
-        }    
+    private void divideActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_divideActionPerformed
+        setSkaitlis2();
+        skaitlis1 = aprekini.vienads(skaitlis1, skaitlis2);
+        aprekini.setOperacija("/");
+        setDefaultSkaitlis2();
+    }//GEN-LAST:event_divideActionPerformed
+
+    private void setElementText(String vertiba){
+             
+        if(!vaiIrKomats || !vertiba.equals(".")){
+            if(vertiba.equals(".")){
+                izvadesLogs += ".";
+                vaiIrKomats = true;
+            } else {
+                if(izvadesLogs.equals("0")){
+                    izvadesLogs = vertiba;
+                } else {
+                    izvadesLogs += vertiba;
+                }
+            }
+        }
         
-        skaitlis2 = Integer.valueOf(rezultats.getText());
+        rezultats.setText(izvadesLogs);
     }
     
-    private void setDefaultSkaitlis2(){
+    private void setSkaitlis2(){
+        int l = rezultats.getText().length();
+        
+        if(rezultats.getText().charAt(l-1)=='.'){
+            skaitlis2 = Double.valueOf(rezultats.getText() + "0");
+        } else {
+            skaitlis2 = Double.valueOf(rezultats.getText());
+        }
+        
+        vaiIrKomats = false;
+    }
+    
+    private void setDefaultSkaitlis2(){   
         rezultats.setText(String.valueOf(skaitlis1));
+        int l = rezultats.getText().length();
+        
+        if(rezultats.getText().charAt(l-1)=='0'){
+            rezultats.setText(String.valueOf(Math.round(skaitlis1)));
+        } 
         skaitlis2 = 0;
+        izvadesLogs = "0";
     }
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JButton astoni;
@@ -269,7 +332,9 @@ public class Kalkulators extends javax.swing.JPanel {
     private javax.swing.JButton clear;
     private javax.swing.JButton devini;
     private javax.swing.JButton divi;
+    private javax.swing.JButton divide;
     private javax.swing.JButton equals;
+    private javax.swing.JButton floatingPoint;
     private javax.swing.JButton minus;
     private javax.swing.JButton multiply;
     private javax.swing.JButton pieci;
