@@ -16,6 +16,7 @@ public class Kalkulators extends javax.swing.JPanel {
     private double skaitlis2;
     private boolean vaiIrKomats = false;
     private String izvadesLogs = "0";
+    private boolean vaiVarVeiktDarbibu = true;
     /**
      * Creates new form Kalkulators
      */
@@ -138,6 +139,7 @@ public class Kalkulators extends javax.swing.JPanel {
         add(nulle, new org.netbeans.lib.awtextra.AbsoluteConstraints(310, 80, 70, 40));
 
         rezultats.setBackground(new java.awt.Color(255, 255, 255));
+        rezultats.setHorizontalAlignment(javax.swing.SwingConstants.RIGHT);
         rezultats.setBorder(javax.swing.BorderFactory.createMatteBorder(1, 1, 1, 1, new java.awt.Color(204, 204, 255)));
         add(rezultats, new org.netbeans.lib.awtextra.AbsoluteConstraints(30, 20, 440, 30));
 
@@ -163,7 +165,7 @@ public class Kalkulators extends javax.swing.JPanel {
                 equalsActionPerformed(evt);
             }
         });
-        add(equals, new org.netbeans.lib.awtextra.AbsoluteConstraints(40, 250, 440, 40));
+        add(equals, new org.netbeans.lib.awtextra.AbsoluteConstraints(40, 250, 430, 40));
 
         multiply.setText("*");
         multiply.addActionListener(new java.awt.event.ActionListener() {
@@ -187,7 +189,7 @@ public class Kalkulators extends javax.swing.JPanel {
                 floatingPointActionPerformed(evt);
             }
         });
-        add(floatingPoint, new org.netbeans.lib.awtextra.AbsoluteConstraints(40, 310, 440, 40));
+        add(floatingPoint, new org.netbeans.lib.awtextra.AbsoluteConstraints(40, 310, 430, 40));
 
         divide.setText("/");
         divide.addActionListener(new java.awt.event.ActionListener() {
@@ -239,31 +241,19 @@ public class Kalkulators extends javax.swing.JPanel {
     }//GEN-LAST:event_nulleActionPerformed
 
     private void plusActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_plusActionPerformed
-        setSkaitlis2();
-        skaitlis1 = aprekini.vienads(skaitlis1, skaitlis2);
-        aprekini.setOperacija("+");
-        setDefaultSkaitlis2();
+        operacijasVeiksana(plus.getText());
     }//GEN-LAST:event_plusActionPerformed
 
     private void equalsActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_equalsActionPerformed
-        setSkaitlis2();
-        skaitlis1 = aprekini.vienads(skaitlis1, skaitlis2);
-        aprekini.setOperacija("=");
-        setDefaultSkaitlis2();
+        operacijasVeiksana(equals.getText());
     }//GEN-LAST:event_equalsActionPerformed
 
     private void minusActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_minusActionPerformed
-        setSkaitlis2();
-        skaitlis1 = aprekini.vienads(skaitlis1, skaitlis2);
-        aprekini.setOperacija("-");
-        setDefaultSkaitlis2();
+        operacijasVeiksana(minus.getText());
     }//GEN-LAST:event_minusActionPerformed
 
     private void multiplyActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_multiplyActionPerformed
-        setSkaitlis2();
-        skaitlis1 = aprekini.vienads(skaitlis1, skaitlis2);
-        aprekini.setOperacija("*");
-        setDefaultSkaitlis2();
+        operacijasVeiksana(multiply.getText());
     }//GEN-LAST:event_multiplyActionPerformed
 
     private void clearActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_clearActionPerformed
@@ -273,6 +263,7 @@ public class Kalkulators extends javax.swing.JPanel {
         aprekini.setOperacija("+");
         izvadesLogs = "0";
         vaiIrKomats = false;
+        vaiVarVeiktDarbibu = true;
     }//GEN-LAST:event_clearActionPerformed
 
     private void floatingPointActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_floatingPointActionPerformed
@@ -280,28 +271,38 @@ public class Kalkulators extends javax.swing.JPanel {
     }//GEN-LAST:event_floatingPointActionPerformed
 
     private void divideActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_divideActionPerformed
-        setSkaitlis2();
-        skaitlis1 = aprekini.vienads(skaitlis1, skaitlis2);
-        aprekini.setOperacija("/");
-        setDefaultSkaitlis2();
+        operacijasVeiksana(divide.getText());
     }//GEN-LAST:event_divideActionPerformed
 
     private void setElementText(String vertiba){
-             
-        if(!vaiIrKomats || !vertiba.equals(".")){
-            if(vertiba.equals(".")){
-                izvadesLogs += ".";
-                vaiIrKomats = true;
-            } else {
-                if(izvadesLogs.equals("0")){
-                    izvadesLogs = vertiba;
+        
+        if(!aprekini.getOperacija().equals("=")){
+            vaiVarVeiktDarbibu = true;
+            if(!vaiIrKomats || !vertiba.equals(".")){
+                if(vertiba.equals(".")){
+                    izvadesLogs += ".";
+                    vaiIrKomats = true;
                 } else {
-                    izvadesLogs += vertiba;
+                    if(izvadesLogs.equals("0")){
+                        izvadesLogs = vertiba;
+                    } else {
+                        izvadesLogs += vertiba;
+                    }
                 }
             }
-        }
         
         rezultats.setText(izvadesLogs);
+        }
+            
+    }
+    
+    private void operacijasVeiksana(String darbiba){
+        if(vaiVarVeiktDarbibu){
+            setSkaitlis2();
+            skaitlis1 = aprekini.vienads(skaitlis1, skaitlis2);            
+            setDefaultSkaitlis2();
+        }
+        aprekini.setOperacija(darbiba);
     }
     
     private void setSkaitlis2(){
@@ -322,10 +323,12 @@ public class Kalkulators extends javax.swing.JPanel {
         
         if(rezultats.getText().charAt(l-1)=='0'){
             rezultats.setText(String.valueOf(Math.round(skaitlis1)));
-        } 
+        }         
         skaitlis2 = 0;
+        vaiVarVeiktDarbibu = false;
         izvadesLogs = "0";
     }
+    
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JButton astoni;
     private javax.swing.JButton cetri;
